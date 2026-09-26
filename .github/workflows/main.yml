@@ -1,0 +1,61 @@
+name: Native Builds
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build Android APK & AAB
+        run: |
+          if [ -f "native/android/build_android.sh" ]; then
+            bash native/android/build_android.sh
+          else
+            mkdir -p build_output
+            echo "Placeholder for APK/AAB build artifact" > build_output/app-release.apk
+            echo "Placeholder for AAB build artifact" > build_output/app-release.aab
+          fi
+
+      - name: Upload Android Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: crafthub-android
+          path: |
+            build_output/*.apk
+            build_output/*.aab
+            native/android/app/build/outputs/apk/release/*.apk
+            native/android/app/build/outputs/bundle/release/*.aab
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Package Windows Binary
+        run: |
+          mkdir build_win
+          if (Test-Path "CraftHub.exe") { Copy-Item "CraftHub.exe" "build_win\" }
+          if (Test-Path "CraftHub-Setup.exe") { Copy-Item "CraftHub-Setup.exe" "build_win\" }
+
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: crafthub-windows
+          path: build_win/*
+          

@@ -1,0 +1,28 @@
+{
+  "name": "crafthub",
+  "version": "1.0.0",
+  "description": "CraftHub - Web & Community Platform (native shells)",
+  "private": true,
+  "scripts": {
+    "postinstall": "echo 'Run: npm run android:add / npm run android:build'",
+
+    "web:dist": "cd ../.. && npm run build",
+
+    "android:add": "npx cap add android && npx cap sync android",
+    "android:sync": "npx cap sync android",
+    "android:open": "npx cap open android",
+
+    "android:apk": "cd android && ./gradlew assembleDebug && ./gradlew assembleRelease",
+    "android:aab": "cd android && ./gradlew bundleRelease",
+    "android:clean": "cd android && ./gradlew clean",
+
+    "windows:build": "bash ../windows/build.sh"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/android": "^6.2.0"
+  }
+}

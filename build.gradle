@@ -1,0 +1,70 @@
+// CraftHub Android app module.
+// Injected into the Capacitor-generated project by build_android.sh.
+//
+// Signing: release builds read keystore details from android/keystore.properties
+// (created from keystore.properties.example). When that file is absent the
+// release config silently falls back to the debug signing config so
+// `assembleRelease` / `bundleRelease` never fail for a missing keystore.
+apply plugin: 'com.android.application'
+
+android {
+    namespace "dev.crafthub.app"
+    compileSdk rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "dev.crafthub.app"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
+        resValue "string", "app_name", "CraftHub"
+        // AdMob is NOT required; no ad-unit metadata is declared here.
+    }
+
+    def keystorePropsFile = rootProject.file("keystore.properties")
+    def hasKeystore = keystorePropsFile.exists()
+    def ksProps = new Properties()
+    if (hasKeystore) { ksProps.load(new FileInputStream(keystorePropsFile)) }
+
+    signingConfigs {
+        if (hasKeystore) {
+            release {
+                storeFile file(ksProps['storeFile'])
+                storePassword ksProps['storePassword']
+                keyAlias ksProps['keyAlias']
+                keyPassword ksProps['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            // Signed when a keystore is provided, otherwise debug-signed so the
+            // build always produces an installable artifact.
+            signingConfig hasKeystore ? signingConfigs.release : signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+}

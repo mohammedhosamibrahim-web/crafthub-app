@@ -1,0 +1,24 @@
+{
+  "name": "CraftHub — منصة المهن العالمية",
+  "short_name": "CraftHub",
+  "description": "منصة فيديو ومجتمعات مهنية عالمية: تواصل، شارك، واربح.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0F0F0F",
+  "categories": ["social", "video", "business", "education"],
+  "icons": [
+    { "src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/static/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Shorts", "url": "/#/shorts" },
+    { "name": "المجتمع | Community", "url": "/#/community/general" },
+    { "name": "المحفظة | Wallet", "url": "/#/wallet" }
+  ]
+}

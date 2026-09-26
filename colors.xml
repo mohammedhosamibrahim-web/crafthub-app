@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="crafthub_dark">#0F0F0F</color>
+    <color name="crafthub_red">#FF0000</color>
+    <color name="crafthub_green">#10B981</color>
+</resources>

@@ -1,0 +1,2 @@
+-keep class com.getcapacitor.** { *; }
+-keep class dev.crafthub.app.** { *; }

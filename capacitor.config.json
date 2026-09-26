@@ -1,0 +1,25 @@
+{
+  "appId": "dev.crafthub.app",
+  "appName": "CraftHub",
+  "webDir": "../dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": false,
+    "allowNavigation": ["*.pages.dev", "*.workers.dev"]
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 800,
+      "backgroundColor": "#0F0F0F",
+      "showSpinner": false,
+      "androidSplashResourceName": "splash"
+    },
+    "StatusBar": { "style": "DARK", "backgroundColor": "#0F0F0F" }
+  }
+}
